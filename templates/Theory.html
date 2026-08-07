@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+
+{% block title %}Python Theory{% endblock %}
+
+{% block content %}
+
+<h1>Python Theory</h1>
+
+<h2>What is Python?</h2>
+<p>
+    Python is a high-level, interpreted and easy-to-learn programming language.
+</p>
+
+<h2>Features of Python</h2>
+
+<ul>
+    <li>Easy to Learn</li>
+    <li>Simple Syntax</li>
+    <li>Object-Oriented</li>
+    <li>Platform Independent</li>
+    <li>Open Source</li>
+</ul>
+
+<h2>Variables</h2>
+
+<pre>
+name = "John"
+age = 20
+
+print(name)
+print(age)
+</pre>
+
+<a href="{{ url_for('Home') }}" class="btn btn-primary">
+    Back to Home
+</a>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %} Java Study Master Pro Portal {% endblock %}
+
+{% block content %}
+ <h1>Java MCQ Quiz</h1>
+
+    <form action="/result" method="POST">
+
+        <h3>1. What is Java?</h3>
+
+        <input type="radio" name="q1" value="Programming Language">
+        Programming Language<br>
+
+        <input type="radio" name="q1" value="Snake">
+        Snake<br>
+
+        <input type="radio" name="q1" value="Car">
+        Car<br>
+
+        <input type="radio" name="q1" value="Game">
+        Game<br><br>
+
+
+        <h3>2. Which method is the entry point of a Java program?</h3>
+
+        <input type="radio" name="q2" value="start">
+        start()<br>
+
+        <input type="radio" name="q2" value="run()">
+        run()<br>
+
+        <input type="radio" name="q2" value="main()">
+        main()<br>
+
+        <input type="radio" name="q2" value="init()">
+        init()<br><br>
+
+
+        <h3>3. Which keyword is used to create an object in Java?</h3>
+
+        <input type="radio" name="q3" value="class">
+        class<br>
+
+        <input type="radio" name="q3" value="object">
+        object<br>
+
+        <input type="radio" name="q3" value="new">
+        new<br>
+
+        <input type="radio" name="q3" value="create">
+        create<br><br>
+
+        <button type="submit">
+            <a href="{{ url_for('Result') }}">Submit</a>
+        </button>
+
+    </form> -
+{% endblock %}

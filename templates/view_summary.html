@@ -1,0 +1,485 @@
+{% extends "base.html" %}
+
+{% block title %}{{ summary.original_filename }} - Summary - Study Master Pro{% endblock %}
+
+{% block content %}
+<style>
+    .summary-header {
+        background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+    }
+    
+    .summary-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+    
+    .summary-meta {
+        display: flex;
+        gap: 2rem;
+        font-size: 0.9rem;
+        opacity: 0.95;
+    }
+    
+    .tab-navigation {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #e0e0e0;
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        padding: 1rem 1.5rem;
+        border: none;
+        background: transparent;
+        color: #666;
+        cursor: pointer;
+        font-weight: 600;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s ease;
+        margin-bottom: -2px;
+    }
+    
+    .tab-btn.active {
+        color: #FF6B6B;
+        border-bottom-color: #FF6B6B;
+    }
+    
+    .tab-content {
+        display: none;
+    }
+    
+    .tab-content.active {
+        display: block;
+    }
+    
+    .summary-section {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #FF6B6B;
+    }
+    
+    .summary-text {
+        line-height: 1.8;
+        color: #555;
+        font-size: 1rem;
+    }
+    
+    .key-points {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .key-point {
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        background: #fff5f5;
+        border-left: 4px solid #FF6B6B;
+        border-radius: 8px;
+        color: #555;
+    }
+    
+    .key-point strong {
+        color: #333;
+    }
+    
+    .topics-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .topic-badge {
+        background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%);
+        color: white;
+        padding: 0.75rem 1.25rem;
+        border-radius: 25px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    .question-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #FF6B6B;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .question-number {
+        font-weight: bold;
+        color: #FF6B6B;
+        margin-bottom: 0.75rem;
+    }
+    
+    .question-text {
+        font-size: 1.05rem;
+        color: #333;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+    
+    .option-group {
+        margin-bottom: 0.75rem;
+    }
+    
+    .option-label {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .option-label:hover {
+        background: #e9ecef;
+        border-color: #FF6B6B;
+    }
+    
+    .option-label input[type="radio"]:checked + span {
+        color: #FF6B6B;
+        font-weight: 600;
+    }
+    
+    .option-label input[type="radio"] {
+        accent-color: #FF6B6B;
+    }
+    
+    .option-text {
+        margin-left: 0.75rem;
+        flex: 1;
+    }
+    
+    .difficulty-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+    
+    .difficulty-easy {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .difficulty-intermediate {
+        background: #fff3cd;
+        color: #856404;
+    }
+    
+    .difficulty-hard {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+    
+    .btn-submit {
+        background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%);
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        color: white;
+    }
+    
+    .btn-back {
+        background: #e9ecef;
+        color: #333;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .btn-back:hover {
+        background: #dee2e6;
+    }
+    
+    .result-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .result-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 600px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .score-display {
+        font-size: 3rem;
+        color: #FF6B6B;
+        font-weight: bold;
+        margin: 1rem 0;
+    }
+    
+    .review-section {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-top: 1.5rem;
+    }
+    
+    .review-item {
+        background: #f8f9fa;
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+        border-radius: 6px;
+        text-align: left;
+    }
+    
+    .review-item.correct {
+        border-left: 3px solid #28a745;
+    }
+    
+    .review-item.incorrect {
+        border-left: 3px solid #dc3545;
+    }
+</style>
+
+<div class="summary-header">
+    <div class="summary-title">📄 {{ summary.original_filename }}</div>
+    <div class="summary-meta">
+        <span>📑 {{ summary.num_pages }} pages</span>
+        <span>❓ {{ questions|length }} practice questions</span>
+        <span>📊 {{ summary.difficulty_level|capitalize }} level</span>
+    </div>
+</div>
+
+<!-- Tab Navigation -->
+<div class="tab-navigation">
+    <button class="tab-btn active" onclick="switchTab(event, 'summary')">📝 Summary</button>
+    <button class="tab-btn" onclick="switchTab(event, 'keypoints')">🔑 Key Points</button>
+    <button class="tab-btn" onclick="switchTab(event, 'topics')">📚 Topics</button>
+    <button class="tab-btn" onclick="switchTab(event, 'quiz')">❓ Practice Questions</button>
+</div>
+
+<!-- Summary Tab -->
+<div id="summary" class="tab-content active">
+    <div class="summary-section">
+        <div class="section-title">📝 Summary</div>
+        <div class="summary-text">
+            {{ summary.summary_text }}
+        </div>
+    </div>
+</div>
+
+<!-- Key Points Tab -->
+<div id="keypoints" class="tab-content">
+    <div class="summary-section">
+        <div class="section-title">🔑 Key Points</div>
+        <ul class="key-points">
+            {% for point in summary.key_points %}
+                <li class="key-point">
+                    <strong>•</strong> {{ point }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Topics Tab -->
+<div id="topics" class="tab-content">
+    <div class="summary-section">
+        <div class="section-title">📚 Topics Covered</div>
+        <div class="topics-container">
+            {% for topic in summary.topics %}
+                <div class="topic-badge">{{ topic }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Quiz Tab -->
+<div id="quiz" class="tab-content">
+    <form id="quizForm">
+        <div class="summary-section">
+            <div class="section-title">❓ Practice Questions</div>
+            
+            {% for question in questions %}
+                <div class="question-card">
+                    <div class="question-number">Q{{ question.question_index + 1 }}</div>
+                    <div class="question-text">{{ question.question }}</div>
+                    
+                    <div class="option-group">
+                        {% for option in question.options %}
+                            <label class="option-label">
+                                <input type="radio" name="answer_{{ question.id }}" value="{{ option }}">
+                                <span class="option-text">{{ option }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    
+                    <span class="difficulty-badge difficulty-{{ question.difficulty }}">
+                        {{ question.difficulty|capitalize }}
+                    </span>
+                </div>
+            {% endfor %}
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">✅ Submit Answers</button>
+                <a href="{{ url_for('pdf_summarizer') }}" class="btn-back">← Upload Another PDF</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Result Modal -->
+<div id="resultModal" class="result-modal">
+    <div class="result-content">
+        <h2>🎉 Quiz Complete!</h2>
+        <div class="score-display" id="scoreDisplay">0/0</div>
+        <div style="font-size: 1.2rem; color: #555; margin-bottom: 1.5rem;">
+            <span id="scorePercentage">0%</span>
+        </div>
+        
+        <div class="review-section" id="reviewSection"></div>
+        
+        <div style="margin-top: 2rem;">
+            <button onclick="closeResults()" class="btn-submit">👍 Done</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchTab(event, tabName) {
+        event.preventDefault();
+        
+        // Hide all tabs
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.remove('active'));
+        
+        // Remove active class from all buttons
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        
+        // Show selected tab and mark button as active
+        document.getElementById(tabName).classList.add('active');
+        event.target.classList.add('active');
+    }
+    
+    document.getElementById('quizForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const summaryId = {{ summary.id }};
+        const answers = {};
+        
+        const questions = document.querySelectorAll('.question-card');
+        questions.forEach(q => {
+            const radio = q.querySelector('input[type="radio"]:checked');
+            const questionId = radio ? radio.name.replace('answer_', '') : null;
+            const answer = radio ? radio.value : null;
+            
+            if (questionId) {
+                answers[questionId] = answer;
+            }
+        });
+        
+        try {
+            const response = await fetch(`/api/submit-pdf-questions/${summaryId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    student_name: prompt('Enter your name (optional):') || 'Anonymous',
+                    answers: answers
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                displayResults(result);
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+    
+    function displayResults(result) {
+        document.getElementById('scoreDisplay').textContent = `${result.score}/${result.total}`;
+        document.getElementById('scorePercentage').textContent = `${result.percentage}%`;
+        
+        let reviewHTML = '';
+        result.results.forEach((r, idx) => {
+            const statusClass = r.correct ? 'correct' : 'incorrect';
+            const statusIcon = r.correct ? '✅' : '❌';
+            
+            reviewHTML += `
+                <div class="review-item ${statusClass}">
+                    <strong>${statusIcon} Q${idx + 1}: ${r.correct ? 'Correct' : 'Incorrect'}</strong>
+                    <div style="font-size: 0.85rem; margin-top: 0.25rem;">
+                        Your answer: ${r.user_answer || 'Not answered'}<br>
+                        Correct answer: ${r.correct_answer}
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('reviewSection').innerHTML = reviewHTML;
+        document.getElementById('resultModal').style.display = 'block';
+    }
+    
+    function closeResults() {
+        document.getElementById('resultModal').style.display = 'none';
+    }
+    
+    window.onclick = function(event) {
+        const modal = document.getElementById('resultModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}

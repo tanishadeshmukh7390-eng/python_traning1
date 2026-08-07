@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Students - Study Master Pro{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="mb-5">
+    <h1 class="mb-3">
+        <i class="bi bi-people-fill" style="color: var(--electric-blue); font-size: 2rem;"></i>
+        All Candidates
+    </h1>
+    <p class="text-teal fw-bold fs-5">
+        Total Candidates: <span style="color: var(--electric-blue); font-size: 1.3rem;">{{ students|length }}</span>
+    </p>
+</div>
+
+<!-- Search Bar -->
+<div class="mb-4">
+    <input type="text"
+           id="searchInput"
+           class="form-control form-control-lg"
+           placeholder="🔍 Search students by name..."
+           style="max-width: 500px;">
+    <div id="resultInfo" class="text-center mt-2"></div>
+</div>
+
+<!-- Students Table -->
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th><i class="bi bi-hash"></i> SR No.</th>
+                <th><i class="bi bi-person-fill"></i> Candidate Name</th>
+                <th><i class="bi bi-person-circle"></i> Username</th>
+                <th><i class="bi bi-envelope-fill"></i> Email</th>
+                <th><i class="bi bi-lock-fill"></i> Password</th>
+                <th style="width: 200px;"><i class="bi bi-gear"></i> Actions</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            {% for student in students %}
+            <tr data-name="{{ student['Name']|lower }}">
+                <td><span style="color: var(--electric-blue); font-weight: 600;">{{ student['Sr_no'] }}</span></td>
+                <td>{{ student['Name'] }}</td>
+                <td><span style="color: var(--teal-bright);">{{ student['username'] }}</span></td>
+                <td>{{ student['email'] }}</td>
+                <td><span style="font-family: monospace; color: var(--text-secondary);">●●●●●●●●</span></td>
+                <td>
+                    <a href="{{ url_for('view_student', Sr_no=student['Sr_no']) }}"
+                       class="btn btn-secondary-premium btn-sm me-2">👁️ View</a>
+                    <a href="{{ url_for('edit_student', Sr_no=student['Sr_no']) }}"
+                       class="btn btn-light-premium btn-sm me-2">✏️ Edit</a>
+                    <a href="{{ url_for('delete_candidate', Sr_no=student['Sr_no']) }}"
+                       class="btn btn-danger-premium btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this student?')">🗑️ Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const allRows = document.querySelectorAll('#tableBody tr');
+const resultInfo = document.getElementById('resultInfo');
+
+searchInput.addEventListener('keyup', function () {
+    const query = this.value.toLowerCase();
+    let matchCount = 0;
+
+    allRows.forEach(function(row) {
+        const name = row.dataset.name;
+
+        if (name.includes(query)) {
+            row.style.display = '';
+            matchCount++;
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    if (matchCount === 0) {
+        resultInfo.innerHTML = '<div class="alert alert-danger text-center mt-2">❌ No results found</div>';
+    } else {
+        resultInfo.innerHTML = `<div class="alert alert-success text-center mt-2">✅ ${matchCount} result(s) found</div>`;
+    }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+
+{% extends "base.html" %}
+{% block title %}Edit Candidate — {{student['name']}}{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center"></div>
+<div class="row justify-content center">
+<div class="col-md-6">
+
+<div class="card shadow-sm">
+    <div class="card-header py-3" style="background-color: #5f1e3a;">
+        <h5 class="mb-0 text-white">
+            ✏️ Edit Candidate
+        </h5>
+    </div>
+
+    <div class="card-body p-4">
+        <!--Current values info -->
+        <div class="text-center mb-4">
+        <div class="alert alert-info" py-2 mb-4">
+            <small>
+                <strong>Editing: </strong>
+                {{ student['Name'] }}
+                Username: {{student['username']}}-
+                Email: {{ student['email'] }}
+            </small>
+        </div>
+        </div>
+
+        <form action="{{url_for('edit_student',Sr_no=student['Sr_no'])}}"
+              method="POST">
+
+              <div class="mb-3">
+                <label class="form-label fw-bold">Candidate Name</label>
+              
+              <input required
+                     name="Candidate_name"
+                     class="form-control"
+                     placeholder="Enter Student Name"
+                     type="text"
+                     value="{{ student['Name'] }}">
+              </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Username</label>
+                <input required
+                       name="username"
+                       min="0"
+                       class="form-control"
+                       placeholder="Enter username"
+                       type="text"
+                       value="{{ student['username'] }}">
+                </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Email</label>
+                <input required
+                       name="email"
+                       min="0"
+                       class="form-control"
+                       placeholder="Enter email"
+                       type="text"
+                       value="{{ student['email'] }}">
+                </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Password</label>
+                <input required
+                       name="password"
+                       class="form-control"
+                       placeholder="Enter password"
+                       type="password"
+                       value="{{ student['password'] }}">
+                </div>
+
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-warning fw-bold">
+                    Save Changes
+                </button>
+                <a href="{{ url_for('students') }}"
+                   class="btn btn-outline-secondary mt-2">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    
+
+    </div>
+
+</div>
+
+</div>
+</div>
+</div>
+{% endblock %}

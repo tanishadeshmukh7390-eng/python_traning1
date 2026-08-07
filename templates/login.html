@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} Login - Study Master Pro {% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 200px);">
+    <div class="card-premium" style="width: 100%; max-width: 450px;">
+        <div class="card-body p-5">
+            <!-- Header -->
+            <div class="text-center mb-4">
+                <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--electric-blue);">🔐</div>
+                <h2 class="mb-2">Welcome Back</h2>
+                <p class="text-secondary-light">Sign in to your Study Master Pro account</p>
+            </div>
+
+            <!-- Login Form -->
+            <form method="POST">
+                <!-- Username Field -->
+                <div class="mb-4">
+                    <label class="form-label">📝 Username</label>
+                    <input name="username" class="form-control" type="text" placeholder="Enter your username" required>
+                </div>
+
+                <!-- Password Field -->
+                <div class="mb-3">
+                    <label class="form-label">🔒 Password</label>
+                    <input name="password" class="form-control" type="password" placeholder="Enter your password" required>
+                </div>
+
+                <!-- Forgot Password Link -->
+                <div class="mb-4">
+                    <a href="{{ url_for('forgot_password') }}" class="text-electric" style="text-decoration: none; font-weight: 500;">Forgot Password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid mb-4">
+                    <button type="submit" class="btn btn-premium">Login Now</button>
+                </div>
+
+                <!-- Register Link -->
+                <div class="text-center">
+                    <p class="text-secondary-light mb-0">Don't have an account? <a href="{{ url_for('Register') }}" class="text-teal" style="text-decoration: none; font-weight: 600;">Register here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

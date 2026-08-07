@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %} Python Study Master Pro Portal {% endblock %}
+
+{% block content %}
+<h1>Python MCQ Quiz</h1>
+
+    <form action="/result" method="POST">
+
+        <h3>1. What is Python?</h3>
+
+        <input type="radio" name="q1" value="Programming Language">
+        Programming Language<br>
+
+        <input type="radio" name="q1" value="Snake">
+        Snake<br>
+
+        <input type="radio" name="q1" value="Car">
+        Car<br>
+
+        <input type="radio" name="q1" value="Game">
+        Game<br><br>
+
+
+        <h3>2. Which keyword is used to define a function?</h3>
+
+        <input type="radio" name="q2" value="def">
+        def<br>
+
+        <input type="radio" name="q2" value="function">
+        function<br>
+
+        <input type="radio" name="q2" value="fun">
+        fun<br>
+
+        <input type="radio" name="q2" value="create">
+        create<br><br>
+
+
+        <h3>3. Which data type stores text?</h3>
+
+        <input type="radio" name="q3" value="str">
+        str<br>
+
+        <input type="radio" name="q3" value="int">
+        int<br>
+
+        <input type="radio" name="q3" value="float">
+        float<br>
+
+        <input type="radio" name="q3" value="bool">
+        bool<br><br>
+
+        <button type="submit">
+            <a href="{{ url_for('Result') }}">Submit</a>
+        </button>
+
+    </form>
+{% endblock %}

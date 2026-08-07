@@ -1,0 +1,522 @@
+{% extends "base.html" %}
+
+{% block title %}Take Quiz - {{ topic }} - Study Master Pro{% endblock %}
+
+{% block content %}
+<style>
+    .quiz-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .quiz-header h1 {
+        font-size: 1.8rem;
+        margin: 0;
+        font-weight: bold;
+    }
+    
+    .timer {
+        font-size: 1.2rem;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+    }
+    
+    .quiz-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .progress-section {
+        margin-bottom: 2rem;
+    }
+    
+    .question-counter {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    
+    .question-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .question-card h3 {
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    
+    .option-group {
+        margin-bottom: 1rem;
+    }
+    
+    .option-label {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .option-label:hover {
+        background: #e9ecef;
+        border-color: #667eea;
+    }
+    
+    .option-label input[type="radio"]:checked + span {
+        color: #667eea;
+        font-weight: 600;
+    }
+    
+    .option-label input[type="radio"]:checked {
+        accent-color: #667eea;
+    }
+    
+    .option-text {
+        margin-left: 0.75rem;
+        flex: 1;
+    }
+    
+    .navigation-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-top: 2rem;
+    }
+    
+    .btn-nav {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-prev {
+        background: #e9ecef;
+        color: #333;
+    }
+    
+    .btn-prev:hover {
+        background: #dee2e6;
+    }
+    
+    .btn-submit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-nav:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .progress-bar {
+        height: 8px;
+        background: #e9ecef;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.3s ease;
+    }
+    
+    .result-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .result-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 600px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .score-display {
+        font-size: 3rem;
+        color: #667eea;
+        font-weight: bold;
+        margin: 1rem 0;
+    }
+    
+    .score-text {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 1.5rem;
+    }
+    
+    .score-details {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+    
+    .btn-review {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-right: 0.5rem;
+    }
+    
+    .btn-review:hover {
+        color: white;
+    }
+    
+    .btn-back {
+        background: #e9ecef;
+        color: #333;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    
+    .btn-back:hover {
+        background: #dee2e6;
+    }
+    
+    .review-section {
+        display: none;
+        margin-top: 2rem;
+    }
+    
+    .review-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #ddd;
+    }
+    
+    .review-card.correct {
+        border-left-color: #28a745;
+    }
+    
+    .review-card.incorrect {
+        border-left-color: #dc3545;
+    }
+    
+    .review-status {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    
+    .review-status.correct {
+        color: #28a745;
+    }
+    
+    .review-status.incorrect {
+        color: #dc3545;
+    }
+    
+    .answer-comparison {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 0.75rem 0;
+    }
+    
+    .answer-comparison p {
+        margin: 0.25rem 0;
+    }
+    
+    .user-answer {
+        color: #dc3545;
+    }
+    
+    .correct-answer {
+        color: #28a745;
+    }
+    
+    .explanation {
+        background: #e7f3ff;
+        border-left: 3px solid #2196F3;
+        padding: 0.75rem;
+        margin-top: 0.75rem;
+        border-radius: 4px;
+        font-style: italic;
+    }
+</style>
+
+<div class="quiz-container">
+    <div class="quiz-header">
+        <div>
+            <h1>🎯 {{ topic }}</h1>
+            <small>AI-Generated Quiz</small>
+        </div>
+        <div class="timer">
+            ⏱️ <span id="timer">00:00</span>
+        </div>
+    </div>
+    
+    <!-- Progress Section -->
+    <div class="progress-section">
+        <div class="question-counter">
+            <strong>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">{{ quiz.num_questions }}</span></strong>
+            <div class="progress-bar mt-2">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quiz Form -->
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        
+        <div class="navigation-buttons">
+            <button type="button" class="btn-nav btn-prev" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+            <button type="button" class="btn-nav btn-submit" id="submitBtn">Submit Quiz</button>
+        </div>
+    </form>
+    
+    <!-- Review Section (shown after submission) -->
+    <div id="reviewSection" class="review-section">
+        <h3 class="mb-4">📋 Review Your Answers</h3>
+        <div id="reviewContainer"></div>
+    </div>
+</div>
+
+<!-- Result Modal -->
+<div id="resultModal" class="result-modal">
+    <div class="result-content">
+        <h2>🎉 Quiz Complete!</h2>
+        <div class="score-display" id="scoreDisplay">0/0</div>
+        <div class="score-text" id="scorePercentage">0%</div>
+        <div class="score-details">
+            <p><strong>Your Performance:</strong></p>
+            <p id="performanceMessage">Well done!</p>
+        </div>
+        <div>
+            <button class="btn-review" onclick="showReview()">📋 Review Answers</button>
+            <a href="{{ url_for('ai_quiz_generator') }}" class="btn-back">← Back to Generator</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentQuestionIndex = 0;
+    let quizData = null;
+    let userAnswers = {};
+    let startTime = Date.now();
+    let quizIdValue = {{ quiz_id }};
+    
+    // Initialize quiz
+    function initQuiz() {
+        quizData = {{ quiz | tojson }};
+        const totalQuestions = quizData.questions.length;
+        document.getElementById('totalQuestions').textContent = totalQuestions;
+        
+        renderQuestion();
+        startTimer();
+    }
+    
+    function renderQuestion() {
+        const question = quizData.questions[currentQuestionIndex];
+        const html = `
+            <div class="question-card">
+                <h3>Q${currentQuestionIndex + 1}. ${question.question}</h3>
+                <div class="option-group">
+                    ${question.options.map((option, idx) => `
+                        <div class="option-group">
+                            <label class="option-label">
+                                <input type="radio" name="answer_${question.id}" value="${option}" 
+                                    ${userAnswers[question.id] === option ? 'checked' : ''}
+                                    onchange="saveAnswer(${question.id}, '${option.replace(/'/g, "\\'")}')">
+                                <span class="option-text">${option}</span>
+                            </label>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('questionsContainer').innerHTML = html;
+        updateProgress();
+        updateButtons();
+    }
+    
+    function saveAnswer(questionId, answer) {
+        userAnswers[questionId] = answer;
+    }
+    
+    function updateProgress() {
+        const progress = ((currentQuestionIndex + 1) / quizData.questions.length) * 100;
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+    }
+    
+    function updateButtons() {
+        document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+        
+        if (currentQuestionIndex === quizData.questions.length - 1) {
+            document.getElementById('submitBtn').textContent = '✅ Submit Quiz';
+        } else {
+            document.getElementById('submitBtn').textContent = 'Next Question →';
+            document.getElementById('submitBtn').onclick = (e) => {
+                e.preventDefault();
+                nextQuestion();
+            };
+        }
+    }
+    
+    function nextQuestion() {
+        if (currentQuestionIndex < quizData.questions.length - 1) {
+            currentQuestionIndex++;
+            renderQuestion();
+        }
+    }
+    
+    function previousQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderQuestion();
+        }
+    }
+    
+    document.getElementById('quizForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (currentQuestionIndex < quizData.questions.length - 1) {
+            nextQuestion();
+            return;
+        }
+        
+        // Submit quiz
+        const answers = {};
+        quizData.questions.forEach(q => {
+            answers[q.id] = userAnswers[q.id] || null;
+        });
+        
+        try {
+            const response = await fetch(`/api/submit-quiz/${quizIdValue}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    student_name: prompt('Enter your name (optional):') || 'Anonymous',
+                    answers: answers
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                displayResults(result);
+            } else {
+                alert('Error submitting quiz: ' + result.message);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+    
+    function displayResults(result) {
+        const percentage = result.percentage;
+        document.getElementById('scoreDisplay').textContent = `${result.score}/${result.total}`;
+        document.getElementById('scorePercentage').textContent = `${percentage}%`;
+        
+        let message = '';
+        if (percentage >= 80) {
+            message = '🌟 Excellent performance! You are mastering this topic!';
+        } else if (percentage >= 60) {
+            message = '👍 Good job! Keep practicing to improve!';
+        } else if (percentage >= 40) {
+            message = '📚 You\'re on the right track. Practice more!';
+        } else {
+            message = '💪 Keep learning! Review the material and try again!';
+        }
+        
+        document.getElementById('performanceMessage').textContent = message;
+        
+        // Store results for review
+        window.quizResults = result.results;
+        
+        document.getElementById('resultModal').style.display = 'block';
+    }
+    
+    function showReview() {
+        if (!window.quizResults) return;
+        
+        let reviewHTML = '';
+        quizData.questions.forEach((q, idx) => {
+            const result = window.quizResults[idx];
+            const isCorrect = result.correct;
+            
+            reviewHTML += `
+                <div class="review-card ${isCorrect ? 'correct' : 'incorrect'}">
+                    <div class="review-status ${isCorrect ? 'correct' : 'incorrect'}">
+                        ${isCorrect ? '✅ Correct' : '❌ Incorrect'}
+                    </div>
+                    <strong>Q${idx + 1}. ${q.question}</strong>
+                    <div class="answer-comparison">
+                        <p><span class="user-answer"><strong>Your Answer:</strong> ${result.user_answer || 'Not answered'}</span></p>
+                        <p><span class="correct-answer"><strong>Correct Answer:</strong> ${result.correct_answer}</span></p>
+                    </div>
+                    ${result.explanation ? `<div class="explanation">💡 ${result.explanation}</div>` : ''}
+                </div>
+            `;
+        });
+        
+        document.getElementById('reviewContainer').innerHTML = reviewHTML;
+        document.getElementById('reviewSection').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function startTimer() {
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timer').textContent = 
+                String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        }, 1000);
+    }
+    
+    // Initialize on load
+    initQuiz();
+</script>
+{% endblock %}

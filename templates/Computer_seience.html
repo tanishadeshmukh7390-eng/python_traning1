@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %} Computer Science - Study Master Pro {% endblock %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Page Header -->
+<div class="hero-section mb-5">
+    <div class="text-center">
+        <h1 class="mb-3">📚 Explore Computer Science</h1>
+        <p class="text-gradient fw-bold fs-5">✨ Choose Your Favorite Computer Science Subject & Start Learning ✨</p>
+    </div>
+</div>
+
+<!-- Subject Cards Grid -->
+<div class="row g-4">
+
+    <!-- Card 1: Operating System -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='operating system_img.jpg') }}" alt="Operating System">
+            <div class="subject-card-body">
+                <h5 class="mb-2">💻 Operating System</h5>
+                <p>Process, Memory Management and Scheduling.</p>
+                <a href="{{ url_for('operating_system', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: DBMS -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='DBMS_img.jpg') }}" alt="Database Management System">
+            <div class="subject-card-body">
+                <h5 class="mb-2">🗄️ Database Management System</h5>
+                <p>SQL, Normalization and Database Design.</p>
+                <a href="{{ url_for('dbms_lang', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3: Computer Networks -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='computer networking_img.jpg') }}" alt="Computer Networks">
+            <div class="subject-card-body">
+                <h5 class="mb-2">🌐 Computer Networks</h5>
+                <p>TCP/IP, OSI Model and Networking Basics.</p>
+                <a href="{{ url_for('computer_network', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4: Data Structures -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='DSA_img.jpg') }}" alt="Data Structures & Algorithms">
+            <div class="subject-card-body">
+                <h5 class="mb-2">📚 Data Structures</h5>
+                <p>Arrays, Stack, Queue, Tree and Graph.</p>
+                <a href="{{ url_for('data_structure', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

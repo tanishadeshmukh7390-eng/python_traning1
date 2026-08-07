@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %} C lang Study Master Pro Portal {% endblock %}
+
+{% block content %}
+<h1>C lang MCQ Quiz</h1>
+
+    <form action="/result" method="POST">
+
+        <h3>1. Who developed the C language?</h3>
+
+        <input type="radio" name="q1" value="James Gosling">
+        James Gosling<br>
+
+        <input type="radio" name="q1" value="Dennis Ritchie">
+        Dennis Ritchie<br>
+
+        <input type="radio" name="q1" value="Bjarne Stroustrup">
+        Bjarne Stroustrup<br>
+
+        <input type="radio" name="q1" value="Guido van Rossum">
+        Guido van Rossum<br><br>
+
+
+        <h3>2. Which symbol is used to end a statement in C?</h3>
+
+        <input type="radio" name="q2" value=".">
+        .<br>
+
+        <input type="radio" name="q2" value=",">
+        ,<br>
+
+        <input type="radio" name="q2" value=";">
+        ;<br>
+
+        <input type="radio" name="q2" value=":">
+        :<br><br>
+
+
+        <h3>3. Which function is used to print output in C?</h3>
+
+        <input type="radio" name="q3" value="scanf()">
+        scanf()<br>
+
+        <input type="radio" name="q3" value="print()">
+        print()<br>
+
+        <input type="radio" name="q3" value="printf()">
+        printf()<br>
+
+        <input type="radio" name="q3" value="output()">
+        output()<br><br>
+
+        <button type="submit">
+            <a href="{{ url_for('Result') }}">Submit</a>
+        </button>
+
+    </form>
+{% endblock %}

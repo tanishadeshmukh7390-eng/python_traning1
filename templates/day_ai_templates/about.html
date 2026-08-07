@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %} About - Study Quiz Hub {% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero-section mb-5">
+    <div class="text-center">
+        <h1 class="mb-3">📖 About Study Quiz Hub</h1>
+        <p class="text-gradient fw-bold fs-5">Building the Future of Learning Through Interactive Quizzes</p>
+    </div>
+</div>
+
+<!-- Introduction Card -->
+<div class="card-premium mb-5">
+    <div class="card-body p-4">
+        <p class="lead mb-0">
+            Study Quiz Hub Portal is an innovative educational web application developed using <strong>Python Flask, HTML, CSS, and Jinja2 Templates</strong>. The platform provides  comprehensive programming quizzes, automatic result generation, percentage calculation, and instant feedback. It helps students master programming concepts, improve problem-solving skills, and prepare for interviews and examinations through an interactive learning environment.
+        </p>
+    </div>
+</div>
+
+<!-- Features, About Developer, & Tech Stack -->
+<div class="row g-4">
+ational web application developed using <strong>Python Flask, HTML, CSS, 
+    <!-- Features Card -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100">
+            <div class="card-body">
+                <h3 class="mb-4">✨ Key Features</h3>
+                <ul class="list-unstyled" style="color: var(--text-secondary);">
+                    <li class="mb-2">✅ Programming MCQ Quizzes</li>
+                    <li class="mb-2">✅ Multiple Subject Categories</li>
+                    <li class="mb-2">✅ Automatic Result Calculation</li>
+                    <li class="mb-2">✅ Pass/Fail Status Detection</li>
+                    <li class="mb-2">✅ Student Performance Tracking</li>
+                    <li class="mb-2">✅ Interactive Dashboard</li>
+                    <li class="mb-2">✅ User-Friendly Interface</li>
+                    <li class="mb-2">✅ Easy Navigation Menu</li>
+                    <li class="mb-2">✅ Interview Prep Resources</li>
+                    <li class="mb-2">✅ Exam Practice Mode</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Developer Card -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100 text-center">
+            <div class="card-body">
+                <img src="{{ url_for('static', filename='IMAGES/github.jpg') }}"
+                     class="rounded-circle shadow mb-4"
+                     style="width: 120px; height: 120px; object-fit: cover; border: 3px solid var(--electric-blue);">
+                
+                <h3 class="mb-2">👩‍💻 About the Creator</h3>
+                <p class="text-secondary-light mb-3">
+                    <strong>Tanisha S Kadam</strong>
+                </p>
+                <p class="text-secondary-light mb-3" style="font-size: 0.9rem;">
+                    Computer Engineering Student & Project Innovator
+                </p>
+                <p class="text-secondary-light mb-4" style="font-size: 0.9rem;">
+                    "I created Study Quiz Hub to empower students with engaging tools for self-paced learning and skill enhancement."
+                </p>
+                <a href="mailto:tanu@example.com" class="btn btn-light-premium btn-sm">📧 Contact Creator</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Stack Card -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100">
+            <div class="card-body">
+                <h3 class="mb-4">🛠️ Tech Stack</h3>
+                <ul class="list-unstyled" style="color: var(--text-secondary);">
+                    <li class="mb-2">⚙️ <strong>Python</strong></li>
+                    <li class="mb-2">⚙️ <strong>Flask Framework</strong></li>
+                    <li class="mb-2">⚙️ <strong>HTML5 & CSS3</strong></li>
+                    <li class="mb-2">⚙️ <strong>Bootstrap 5</strong></li>
+                    <li class="mb-2">⚙️ <strong>Jinja2 Templates</strong></li>
+                    <li class="mb-2">⚙️ <strong>SQLite Database</strong></li>
+                    <li class="mb-2">⚙️ <strong>JavaScript (ES6+)</strong></li>
+                    <li class="mb-2">⚙️ <strong>Visual Studio Code</strong></li>
+                    <li class="mb-2">⚙️ <strong>Google Chrome Browser</strong></li>
+                    <li class="mb-2">⚙️ <strong>Git & GitHub</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Mission Statement -->
+<div class="card-premium mt-5">
+    <div class="card-body p-4 text-center">
+        <h3 class="mb-3">🎯 Our Mission</h3>
+        <p class="text-secondary-light">
+            To make quality programming education accessible to everyone by providing an interactive, engaging platform that combines theory and practice. We believe in empowering learners to achieve their academic and professional goals  through continuous learning and self-assessment.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

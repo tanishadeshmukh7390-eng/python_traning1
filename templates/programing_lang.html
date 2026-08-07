@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %} Programming Languages - Study Master Pro {% endblock %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Page Header -->
+<div class="hero-section mb-5">
+    <div class="text-center">
+        <h1 class="mb-3">💻 Explore Programming Languages</h1>
+        <p class="text-gradient fw-bold fs-5">✨ Choose Your Favorite Programming Language & Start Learning! ✨</p>
+    </div>
+</div>
+
+<!-- Subject Cards Grid -->
+<div class="row g-4">
+
+    <!-- Card 1: C -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='c_img.jpg') }}" alt="C Programming">
+            <div class="subject-card-body">
+                <h5 class="mb-2">🔹 C Programming</h5>
+                <p>Learn basics of C Programming.</p>
+                <a href="{{ url_for('c_lang', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: C++ -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='cpp_img.jpg') }}" alt="C++ Programming">
+            <div class="subject-card-body">
+                <h5 class="mb-2">⚡ C++</h5>
+                <p>Object Oriented Programming with C++.</p>
+                <a href="{{ url_for('cpp_lang', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3: Java -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='JAVA_img.jpg') }}" alt="Java Programming">
+            <div class="subject-card-body">
+                <h5 class="mb-2">☕ Java</h5>
+                <p>Core Java and Advanced Java concepts.</p>
+                <a href="{{ url_for('java_lang', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4: Python -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='python_img.jpg') }}" alt="Python Programming">
+            <div class="subject-card-body">
+                <h5 class="mb-2">🐍 Python</h5>
+                <p>Python Programming and Automation.</p>
+                <a href="{{ url_for('python_lang', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

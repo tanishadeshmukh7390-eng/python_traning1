@@ -1,0 +1,393 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz History - Study Master Pro{% endblock %}
+
+{% block content %}
+<style>
+    .history-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .history-header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-card .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-card .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    .quiz-table {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    
+    .table-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+    }
+    
+    .table-header h3 {
+        margin: 0;
+        font-size: 1.3rem;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th {
+        background: #f8f9fa;
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #e0e0e0;
+    }
+    
+    td {
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    tr:hover {
+        background: #f8f9fa;
+    }
+    
+    .topic-cell {
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .difficulty-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-align: center;
+    }
+    
+    .difficulty-easy {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .difficulty-intermediate {
+        background: #fff3cd;
+        color: #856404;
+    }
+    
+    .difficulty-hard {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .btn-action {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-retake {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .btn-retake:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-view-scores {
+        background: #e9ecef;
+        color: #333;
+    }
+    
+    .btn-view-scores:hover {
+        background: #dee2e6;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        background: white;
+        border-radius: 15px;
+    }
+    
+    .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+    
+    .empty-state p {
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    
+    .btn-create {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-create:hover {
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .no-data {
+        color: #999;
+        font-style: italic;
+    }
+    
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 2rem;
+        border-radius: 15px;
+        max-width: 600px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    .close:hover {
+        color: #000;
+    }
+    
+    .scores-list {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+    
+    .score-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .score-item:last-child {
+        border-bottom: none;
+    }
+    
+    .score-value {
+        font-weight: 600;
+        color: #667eea;
+    }
+    
+    .date-cell {
+        color: #999;
+        font-size: 0.9rem;
+    }
+    
+    .back-link {
+        display: inline-block;
+        margin-bottom: 1rem;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .back-link:hover {
+        color: #764ba2;
+    }
+</style>
+
+<a href="{{ url_for('ai_quiz_generator') }}" class="back-link">← Back to Generator</a>
+
+<div class="history-header">
+    <h1>📊 Quiz History & Performance</h1>
+    <p>View all your generated quizzes and track your progress</p>
+</div>
+
+{% if quizzes %}
+    <!-- Statistics -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ quizzes|length }}</div>
+            <div class="stat-label">Quizzes Generated</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ quizzes|map(attribute='total_attempts')|sum }}</div>
+            <div class="stat-label">Total Attempts</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">
+                {%- set total_avg = quizzes|map(attribute='average_score')|list|length -%}
+                {%- if total_avg > 0 -%}
+                    {{ "%.1f"|format(quizzes|map(attribute='average_score')|sum / total_avg) }}
+                {%- else -%}
+                    0
+                {%- endif -%}
+            </div>
+            <div class="stat-label">Average Score</div>
+        </div>
+    </div>
+    
+    <!-- Quizzes Table -->
+    <div class="quiz-table">
+        <div class="table-header">
+            <h3>📋 All Quizzes</h3>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Difficulty</th>
+                    <th>Questions</th>
+                    <th>Attempts</th>
+                    <th>Avg Score</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes %}
+                    <tr>
+                        <td class="topic-cell">{{ quiz.topic }}</td>
+                        <td>
+                            <span class="difficulty-badge difficulty-{{ quiz.difficulty }}">
+                                {{ quiz.difficulty|capitalize }}
+                            </span>
+                        </td>
+                        <td>{{ quiz.num_questions }}</td>
+                        <td>{{ quiz.total_attempts }}</td>
+                        <td>
+                            {% if quiz.total_attempts > 0 %}
+                                <span class="score-value">{{ quiz.average_score }}/{{ quiz.num_questions }}</span>
+                            {% else %}
+                                <span class="no-data">Not attempted</span>
+                            {% endif %}
+                        </td>
+                        <td class="date-cell">{{ quiz.created_at }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="/ai-quiz/{{ quiz.id }}" class="btn-action btn-retake">Take Quiz</a>
+                                {% if quiz.total_attempts > 0 %}
+                                    <button class="btn-action btn-view-scores" onclick="showScores({{ quiz.id }}, '{{ quiz.topic }}')">
+                                        View Scores
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Scores Modal -->
+    <div id="scoresModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeScores()">&times;</span>
+            <h3 id="quizTitle">Quiz Scores</h3>
+            <div id="scoresContainer" class="scores-list"></div>
+        </div>
+    </div>
+    
+{% else %}
+    <!-- Empty State -->
+    <div class="empty-state">
+        <div class="empty-state-icon">🎓</div>
+        <h3>No Quizzes Yet</h3>
+        <p>You haven't generated any quizzes yet. Create one to get started!</p>
+        <a href="{{ url_for('ai_quiz_generator') }}" class="btn-create">
+            ✨ Create Your First Quiz
+        </a>
+    </div>
+{% endif %}
+
+<script>
+    async function showScores(quizId, topicName) {
+        // This would require an additional API endpoint to fetch scores for a specific quiz
+        // For now, we'll show a simple message
+        document.getElementById('quizTitle').textContent = `Scores for: ${topicName}`;
+        document.getElementById('scoresContainer').innerHTML = `
+            <p class="no-data">Score details loading...</p>
+        `;
+        document.getElementById('scoresModal').style.display = 'block';
+    }
+    
+    function closeScores() {
+        document.getElementById('scoresModal').style.display = 'none';
+    }
+    
+    window.onclick = function(event) {
+        const modal = document.getElementById('scoresModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}

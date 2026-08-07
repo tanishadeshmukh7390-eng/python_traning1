@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Python Language Study Quiz Hub Portal {% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz App</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: lightcyan;
+            color: white;
+        }
+
+        .box {
+            background: #2c3e50;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 60px;
+        }
+
+        .option {
+            background: #34495e;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+   <h2 class="text-center mt-4" style="color: black;">
+    🐍 <br>Python Language Quiz
+</h2>
+
+    <div class="text-center my-4">
+        <img src="{{ url_for('images', filename='python_img.jpg') }}" alt="Python Quiz" class="img-fluid rounded shadow" style="max-height: 260px;">
+    </div>
+
+    <div class="box">
+
+        <h5 style="text-align: center;">Question {{ qno + 1 }} / {{ total }}</h5>
+
+        <h4 class="mt-3">{{ question.q }}</h4>
+
+<form method="POST">
+
+    <div class="row">
+
+        {% for opt in question.options %}
+        <div class="col-md-6 mb-3">
+
+            <div class="border rounded p-2">
+
+                <input type="radio"
+                       name="answer"
+                       value="{{ opt }}"
+                       required>
+
+                {% if loop.index0 == 0 %}
+                    <strong>A.</strong>
+                {% elif loop.index0 == 1 %}
+                    <strong>B.</strong>
+                {% elif loop.index0 == 2 %}
+                    <strong>C.</strong>
+                {% elif loop.index0 == 3 %}
+                    <strong>D.</strong>
+                {% endif %}
+
+                {{ opt }}
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+            <div class="d-flex justify-content-between mt-4">
+
+                {% if qno > 0 %}
+                <button name="prev" class="btn btn-secondary">⬅ Previous</button>
+                {% else %}
+                <span></span>
+                {% endif %}
+
+                {% if qno < total - 1 %}
+                <button name="next" class="btn btn-info">Next ➡</button>
+                {% else %}
+                <button name="submit" class="btn btn-success">Submit 🎯</button>
+                {% endif %}
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+{% endblock %}

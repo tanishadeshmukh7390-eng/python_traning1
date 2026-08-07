@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %} About - Study Master Pro {% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero-section mb-5 text-center">
+
+    <div style="font-size:70px;">🎓</div>
+
+    <h1 class="display-4 fw-bold text-gradient">
+        📖 Study Master Pro
+    </h1>
+
+    <p class="text-info fs-5">
+        🚀 Smart Learning • 💡 Smart Practice • 🏆 Smart Success
+    </p>
+
+</div>
+
+<!-- Introduction Card -->
+<h3 class="mb-3 text-info">
+    📚 About Study Master Pro
+</h3>
+
+<p class="lead">
+
+🎓 <strong>Study Master Pro</strong> is an innovative educational platform built using
+🐍 <strong>Python Flask</strong>,
+🎨 <strong>HTML5 & CSS3</strong>,
+⚡ <strong>Bootstrap 5</strong>,
+🧩 <strong>Jinja2</strong> and
+🗄️ <strong>SQLite Database</strong>.
+
+It helps students prepare for
+📝 Exams,
+💻 Programming,
+🎤 Interviews,
+and 📊 Skill Assessment through interactive quizzes.
+
+</p>
+<!-- Features, About Developer, & Tech Stack -->
+<div class="row g-4">
+ational web application developed using <strong>Python Flask, HTML, CSS, 
+    <!-- Features Card -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100">
+            <div class="card-body">
+                <h3 class="mb-4">✨ Key Features</h3>
+                <ul class="list-unstyled" style="color: var(--text-secondary);">
+                   <li class="mb-3">🎯 Programming MCQ Quizzes</li>
+                    <li class="mb-3">🎯 Programming MCQ Quizzes</li>
+                    <li class="mb-3">📚 Multiple Subject Categories</li>
+<li class="mb-3">📊 Automatic Result Calculation</li>
+<li class="mb-3">🏆 Pass / Fail Detection</li>
+<li class="mb-3">📈 Performance Tracking</li>
+<li class="mb-3">📋 Interactive Dashboard</li>
+<li class="mb-3">💻 User Friendly Interface</li>
+<li class="mb-3">🚀 Easy Navigation</li>
+<li class="mb-3">🎤 Interview Preparation</li>
+<li class="mb-3">📝 Exam Practice Mode</li>
+<li class="mb-3">🤖 AI Quiz Generator</li>
+<li class="mb-3">📄 PDF Summary</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+ <!-- About Developer Card -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100 text-center">
+            <div class="card-body">
+                <img src="{{ url_for('static', filename='IMAGES/github.jpg') }}"
+                     class="rounded-circle shadow mb-4"
+                     style="width: 120px; height: 120px; object-fit: cover; border: 3px solid var(--electric-blue);">
+                
+                <h3 class="mb-2">👩‍💻 About the Creator</h3>
+                <p class="text-secondary-light">
+
+👩‍💻 <strong>Tanisha S Kadam</strong>
+
+</p>
+
+<p class="text-secondary-light">
+
+🎓 Computer Engineering Student
+
+💡 Python & Flask Developer
+
+🚀 Passionate About Web Development
+
+</p>
+
+<p class="text-secondary-light">
+
+"I believe learning should be interactive, engaging and accessible to everyone."
+
+</p>
+                <a href="mailto:tanu@example.com" class="btn btn-light-premium btn-sm">📧 Contact Creator</a>
+            </div>
+        </div>
+    </div>
+ <!-- Technology Stack Card -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card-premium h-100">
+            <div class="card-body">
+                <h3 class="mb-4">🛠️ Tech Stack</h3>
+                <ul class="list-unstyled" style="color: var(--text-secondary);">
+                
+
+    <li class="mb-2">🐍 <strong>Python</strong></li>
+
+    <li class="mb-2">🌐 <strong>Flask Framework</strong></li>
+
+    <li class="mb-2">🎨 <strong>HTML5 & CSS3</strong></li>
+
+    <li class="mb-2">🅱️ <strong>Bootstrap 5</strong></li>
+
+    <li class="mb-2">🧩 <strong>Jinja2 Templates</strong></li>
+
+    <li class="mb-2">🗄️ <strong>SQLite Database</strong></li>
+
+    <li class="mb-2">⚡ <strong>JavaScript (ES6+)</strong></li>
+
+    <li class="mb-2">💻 <strong>Visual Studio Code</strong></li>
+
+    <li class="mb-2">🌍 <strong>Google Chrome Browser</strong></li>
+
+    <li class="mb-2">🔀 <strong>Git & GitHub</strong></li>
+    
+    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Mission Statement -->
+<div class="card-premium mt-5">
+    <div class="card-body p-4 text-center">
+        <h3 class="mb-3">
+
+🎯 Our Mission
+
+</h3>
+
+<p>
+
+📚 To make quality education accessible to every student.
+
+🚀 Encourage self-learning.
+
+💡 Improve programming skills.
+
+🏆 Help students achieve academic success.
+
+</p>
+    </div>
+</div>
+<div class="row text-center mt-5">
+
+<div class="col-md-3">
+
+<h2 class="text-info">100+</h2>
+
+<p>📚 Quiz Questions</p>
+
+</div>
+
+<div class="col-md-3">
+
+<h2 class="text-success">10+</h2>
+
+<p>📖 Subjects</p>
+
+</div>
+
+<div class="col-md-3">
+
+<h2 class="text-warning">24/7</h2>
+
+<p>🕒 Learning</p>
+
+</div>
+
+<div class="col-md-3">
+
+<h2 class="text-danger">100%</h2>
+
+<p>🎯 Free Access</p>
+
+</div>
+
+</div>
+<div class="card-premium mt-5 text-center p-4">
+
+<h3>⭐ Thank You for Visiting</h3>
+
+<p>
+
+📚 Keep Learning • 💻 Keep Coding • 🚀 Keep Growing
+
+</p>
+
+</div>
+
+{% endblock %}

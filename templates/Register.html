@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %} Register - Study Master Pro  {% endblock %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} mt-3">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 200px); padding: 2rem 0;">
+    <div class="card-premium" style="width: 100%; max-width: 550px;">
+        <div class="card-body p-5">
+            <!-- Header -->
+            <div class="text-center mb-4">
+                <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--electric-blue);">📝</div>
+                <h2 class="mb-2">Create Your Account</h2>
+                <p class="text-secondary-light">Join Study Master Pro and start learning</p>
+            </div>
+
+            <!-- Registration Form -->
+            <form action="{{ url_for('Register') }}" method="POST">
+
+                <!-- Sr No Field -->
+                <div class="mb-3">
+                    <label class="form-label">📌 Sr No</label>
+                    <input name="sr_no" class="form-control" type="number" placeholder="Enter serial number" required>
+                </div>
+
+                <!-- Student Name Field -->
+                <div class="mb-3">
+                    <label class="form-label">👤 Student Name</label>
+                    <input name="student_name" class="form-control" type="text" placeholder="Enter your full name" required>
+                </div>
+
+                <!-- Username Field -->
+                <div class="mb-3">
+                    <label class="form-label">🔤 Username</label>
+                    <input name="username" class="form-control" type="text" placeholder="Choose a unique username" required>
+                </div>
+
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <label class="form-label">📧 Email</label>
+                    <input name="email" class="form-control" type="email" placeholder="Enter your email address" required>
+                </div>
+
+                <!-- Password Field -->
+                <div class="mb-3">
+                    <label class="form-label">🔒 Password</label>
+                    <input name="password" class="form-control" type="password" placeholder="Create a strong password" required>
+                </div>
+
+                <!-- Subject Field -->
+                <div class="mb-4">
+                    <label class="form-label">📚 Subject</label>
+                    <select name="subject" class="form-control" required>
+                        <option value="">Select your preferred subject</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Programming Language">Programming Language</option>
+                        <option value="Computer Science">Computer Science</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid mb-4">
+                    <button type="submit" class="btn btn-premium">Create Account</button>
+                </div>
+
+                <!-- Login Link -->
+                <div class="text-center">
+                    <p class="text-secondary-light mb-0">Already have an account? <a href="{{ url_for('login') }}" class="text-teal" style="text-decoration: none; font-weight: 600;">Login here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

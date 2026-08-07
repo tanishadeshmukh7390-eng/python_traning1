@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 p-5 quiz-card">
+
+        <div class="text-center mb-5">
+
+            <div class="robot-icon">
+                🤖
+            </div>
+
+            <h1 class="fw-bold text-info mt-3">
+                AI Quiz Generator
+            </h1>
+
+            <p class="text-light">
+                Generate professional quizzes using Artificial Intelligence
+            </p>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label text-light">
+                    Quiz Topic
+                </label>
+
+                <input type="text"
+                       class="form-control form-control-lg"
+                       placeholder="Example: Python, DBMS, AI">
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label text-light">
+                    Difficulty
+                </label>
+
+                <select class="form-select form-select-lg">
+
+                    <option>Easy</option>
+                    <option>Medium</option>
+                    <option>Hard</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label text-light">
+                    Questions
+                </label>
+
+                <select class="form-select form-select-lg">
+
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+
+            <button class="btn btn-info btn-lg px-5">
+
+                🚀 Generate Quiz
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 p-5 mt-5 quiz-card">
+
+        <h3 class="text-info mb-4">
+            Generated Questions
+        </h3>
+
+        <div class="question-box">
+
+            <h5 class="text-light">
+                Q1. What is Python?
+            </h5>
+
+            <div class="form-check">
+
+                <input class="form-check-input" type="radio">
+
+                <label class="form-check-label text-light">
+                    Programming Language
+                </label>
+
+            </div>
+
+            <div class="form-check">
+
+                <input class="form-check-input" type="radio">
+
+                <label class="form-check-label text-light">
+                    Database
+                </label>
+
+            </div>
+
+            <div class="form-check">
+
+                <input class="form-check-input" type="radio">
+
+                <label class="form-check-label text-light">
+                    Operating System
+                </label>
+
+            </div>
+
+            <div class="form-check">
+
+                <input class="form-check-input" type="radio">
+
+                <label class="form-check-label text-light">
+                    Browser
+                </label>
+
+            </div>
+
+        </div>
+
+        <div class="text-center mt-5">
+
+            <button class="btn btn-success px-4">
+
+                Submit Quiz
+
+            </button>
+
+            <button class="btn btn-outline-info px-4 ms-2">
+
+                Download PDF
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+body{
+
+background:#081421;
+
+}
+
+.quiz-card{
+
+background:rgba(255,255,255,.06);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.1);
+
+}
+
+.robot-icon{
+
+font-size:70px;
+
+animation:float 2s ease-in-out infinite;
+
+}
+
+@keyframes float{
+
+0%{transform:translateY(0);}
+
+50%{transform:translateY(-10px);}
+
+100%{transform:translateY(0);}
+
+}
+
+.form-control,
+.form-select{
+
+background:#10253d;
+
+color:white;
+
+border:none;
+
+}
+
+.form-control::placeholder{
+
+color:#cfcfcf;
+
+}
+
+.question-box{
+
+background:#10253d;
+
+padding:25px;
+
+border-radius:15px;
+
+}
+
+.btn-info{
+
+background:linear-gradient(90deg,#00d4ff,#007bff);
+
+border:none;
+
+}
+
+.btn-info:hover{
+
+transform:scale(1.05);
+
+transition:.3s;
+
+}
+
+</style>
+
+{% endblock %}

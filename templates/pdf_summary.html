@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 p-5 summary-card">
+
+        <div class="text-center">
+
+            <div class="pdf-icon">📄</div>
+
+            <h1 class="text-info fw-bold mt-3">
+                AI PDF Summarizer
+            </h1>
+
+            <p class="text-light">
+                Upload any PDF and get an instant AI-powered summary.
+            </p>
+
+        </div>
+
+        <form>
+
+            <div class="mb-4">
+
+                <label class="form-label text-light">
+                    Select PDF File
+                </label>
+
+                <input class="form-control form-control-lg"
+                       type="file"
+                       accept=".pdf">
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label text-light">
+                    Summary Length
+                </label>
+
+                <select class="form-select form-select-lg">
+
+                    <option>Short</option>
+                    <option>Medium</option>
+                    <option>Detailed</option>
+
+                </select>
+
+            </div>
+
+            <div class="text-center">
+
+                <button class="btn btn-info btn-lg px-5">
+
+                    📄 Generate Summary
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 p-5 mt-5 summary-card">
+
+        <h3 class="text-info">
+
+            Summary
+
+        </h3>
+
+        <hr>
+
+        <p class="text-light">
+
+            Your summarized PDF content will appear here...
+
+        </p>
+
+        <div class="text-center mt-4">
+
+            <button class="btn btn-success">
+
+                Download Summary
+
+            </button>
+
+            <button class="btn btn-outline-info ms-2">
+
+                Copy Text
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+body{
+
+background:#081421;
+
+}
+
+.summary-card{
+
+background:rgba(255,255,255,.07);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.12);
+
+}
+
+.pdf-icon{
+
+font-size:70px;
+
+animation:float 2s infinite;
+
+}
+
+@keyframes float{
+
+0%{transform:translateY(0);}
+
+50%{transform:translateY(-10px);}
+
+100%{transform:translateY(0);}
+
+}
+
+.form-control,
+.form-select{
+
+background:#10253d;
+
+color:white;
+
+border:none;
+
+}
+
+.form-control::file-selector-button{
+
+background:#00bfff;
+
+color:white;
+
+border:none;
+
+padding:8px 15px;
+
+}
+
+.btn-info{
+
+background:linear-gradient(90deg,#00d4ff,#007bff);
+
+border:none;
+
+}
+
+.btn-info:hover{
+
+transform:scale(1.05);
+
+transition:.3s;
+
+}
+
+</style>
+
+{% endblock %}

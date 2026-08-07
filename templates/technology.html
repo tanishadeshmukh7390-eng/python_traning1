@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %} Technology - Study Master Pro {% endblock %}
+{% block content %}
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Page Header -->
+<div class="hero-section mb-5">
+    <div class="text-center">
+        <h1 class="mb-3">🚀 Explore Technology</h1>
+        <p class="text-gradient fw-bold fs-5">✨ Choose Your Favorite Technology & Start Learning ✨</p>
+    </div>
+</div>
+
+<!-- Subject Cards Grid -->
+<div class="row g-4">
+
+    <!-- Card 1: Web Development -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='web dev_img.jpg') }}" alt="Web Development">
+            <div class="subject-card-body">
+                <h5 class="mb-2">🌐 Web Development</h5>
+                <p>Create modern websites using HTML, CSS, JavaScript and Flask.</p>
+                <a href="{{ url_for('web_development', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: Artificial Intelligence -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='ai_img.jpg') }}" alt="Artificial Intelligence">
+            <div class="subject-card-body">
+                <h5 class="mb-2">🤖 Artificial Intelligence</h5>
+                <p>Machine Learning, Deep Learning and Generative AI.</p>
+                <a href="{{ url_for('Artificial_Intelligence', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3: Data Science -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='data science_img.jpg') }}" alt="Data Science">
+            <div class="subject-card-body">
+                <h5 class="mb-2">📊 Data Science</h5>
+                <p>Data Analysis, Visualization, Pandas and NumPy.</p>
+                <a href="{{ url_for('data_science', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 4: Cyber Security -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='cyber security_img.jpg') }}" alt="Cyber Security">
+            <div class="subject-card-body">
+                <h5 class="mb-2">🔒 Cyber Security</h5>
+                <p>Ethical Hacking, Network Security and Cryptography.</p>
+                <a href="{{ url_for('cyber_security', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 5: Cloud Computing -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='cloud computing_img.jpg') }}" alt="Cloud Computing">
+            <div class="subject-card-body">
+                <h5 class="mb-2">☁️ Cloud Computing</h5>
+                <p>AWS, Azure, Google Cloud and DevOps Tools.</p>
+                <a href="{{ url_for('cloud_computing', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 6: Mobile App Development -->
+    <div class="col-lg-6 col-md-6">
+        <div class="subject-card">
+            <img src="{{ url_for('images', filename='mobile app dev_img.jpg') }}" alt="Mobile App Development">
+            <div class="subject-card-body">
+                <h5 class="mb-2">📱 Mobile App Development</h5>
+                <p>Android, iOS, Flutter and more.</p>
+                <a href="{{ url_for('Mobile_App_Development', qno=0) }}" class="btn btn-light-premium w-100">Start Quiz</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

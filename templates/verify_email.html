@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Email - Study Master Pro{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 200px); padding: 2rem 0;">
+    <div class="card-premium" style="width: 100%; max-width: 520px;">
+        <div class="card-body p-5">
+            <div class="text-center mb-4">
+                <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--electric-blue);">📧</div>
+                <h2 class="mb-2">Email Verification</h2>
+                <p class="text-secondary-light">Enter the code sent to <strong>{{ email }}</strong> to complete registration.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} mt-3">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('verify_email') }}" method="POST">
+                <div class="mb-4">
+                    <label class="form-label">Verification Code</label>
+                    <input type="text" name="code" class="form-control" placeholder="Enter your verification code" required>
+                </div>
+
+                {% if show_code and code %}
+                    <div class="alert alert-info">
+                        Use this verification code: <strong>{{ code }}</strong>
+                    </div>
+                {% endif %}
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary">Verify Email</button>
+                </div>
+                <div class="text-center">
+                    <a href="{{ url_for('Register') }}" class="text-teal" style="text-decoration: none;">Go back to registration</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

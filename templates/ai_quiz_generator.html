@@ -1,0 +1,419 @@
+{% extends "base.html" %}
+
+{% block title %}AI Quiz Generator - Study Master Pro{% endblock %}
+
+{% block content %}
+<style>
+    .ai-header {
+        background: linear-gradient(135deg, #1e3cc4 0%, #712bb7 100%);
+        color: white;
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    }
+    
+    .ai-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+    
+    .ai-header p {
+        font-size: 1.1rem;
+        opacity: 0.95;
+    }
+    
+    .generator-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #8a0505;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid #a80707;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #102ca5;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .btn-generate {
+        background: linear-gradient(135deg, #1838c7 0%, #6823ac 100%);
+        border: none;
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+    
+    .btn-generate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(29, 56, 176, 0.4);
+        color: white;
+    }
+    
+    .btn-generate:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    .loading-spinner {
+        display: none;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .spinner-border {
+        color: #062096;
+    }
+    
+    .quiz-results {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-top: 2rem;
+        display: none;
+    }
+    
+    .quiz-preview {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid #667eea;
+    }
+    
+    .question-preview {
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+    
+    .question-preview h5 {
+        color: #667eea;
+        margin-bottom: 0.5rem;
+    }
+    
+    .option-preview {
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        background: white;
+        border-radius: 4px;
+        border-left: 3px solid #ddd;
+    }
+    
+    .take-quiz-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 1rem;
+    }
+    
+    .take-quiz-btn:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .history-link {
+        text-align: center;
+        margin-top: 2rem;
+    }
+    
+    .history-link a {
+        background: #f8f9fa;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #667eea;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    
+    .history-link a:hover {
+        background: #667eea;
+        color: white;
+    }
+    
+    .error-message {
+        display: none;
+        background: #f8d7da;
+        color: #721c24;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #f5c6cb;
+        margin-bottom: 1rem;
+    }
+    
+    .success-message {
+        display: none;
+        background: #d4edda;
+        color: #155724;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #c3e6cb;
+        margin-bottom: 1rem;
+    }
+    
+    .info-box {
+        background: #e7f3ff;
+        border-left: 4px solid #2196F3;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+    }
+    
+    .difficulty-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+    
+    .difficulty-easy { background: #d4edda; color: #155724; }
+    .difficulty-intermediate { background: #fff3cd; color: #856404; }
+    .difficulty-hard { background: #f8d7da; color: #721c24; }
+</style>
+
+<div class="ai-header">
+    <h1>🤖 AI Master Quiz Generator</h1>
+    <p>Generate unlimited MCQ quizzes using Artificial Intelligence</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message"></div>
+        
+        <!-- Success Message -->
+        <div id="successMessage" class="success-message"></div>
+        
+        <!-- Info Box -->
+        <div class="info-box">
+            <strong>💡 How it works:</strong> Enter a topic, select difficulty and number of questions, 
+            then our AI will generate a unique quiz for you to practice. You can retake quizzes anytime!
+        </div>
+        
+        <!-- Generator Form -->
+        <div class="generator-card">
+            <h3 class="mb-4">📝 Generate Your Quiz</h3>
+            
+            <form id="generatorForm">
+                <div class="form-group">
+                    <label for="topic" class="form-label">Topic *</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="topic" 
+                        placeholder="e.g., Python Programming, Web Development, Data Science..."
+                        required
+                    >
+                    <small class="text-muted">Enter any subject or topic you want to practice</small>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="numQuestions" class="form-label">Number of Questions *</label>
+                            <input 
+                                type="number" 
+                                class="form-control" 
+                                id="numQuestions" 
+                                min="1" 
+                                max="20" 
+                                value="5"
+                                required
+                            >
+                            <small class="text-muted">1-20 questions per quiz</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="difficulty" class="form-label">Difficulty Level *</label>
+                            <select class="form-control" id="difficulty" required>
+                                <option value="easy">Easy</option>
+                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn-generate" id="generateBtn">
+                        ✨ Generate Quiz
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="loading-spinner">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Generating your quiz... This may take a moment.</p>
+            </div>
+        </div>
+        
+        <!-- Quiz Results -->
+        <div id="quizResults" class="quiz-results">
+            <h3 class="mb-3">✅ Quiz Generated Successfully!</h3>
+            <div id="quizPreviewContainer"></div>
+            
+            <div class="text-center">
+                <a id="takeQuizBtn" href="#" class="take-quiz-btn">
+                    🚀 Take This Quiz Now
+                </a>
+            </div>
+        </div>
+        
+        <!-- View History Link -->
+        <div class="history-link">
+            <a href="{{ url_for('quiz_history') }}">
+                📊 View Quiz History & Scores
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('generatorForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const topic = document.getElementById('topic').value.trim();
+    const numQuestions = parseInt(document.getElementById('numQuestions').value);
+    const difficulty = document.getElementById('difficulty').value;
+    
+    // Validate inputs
+    if (!topic) {
+        showError('Please enter a topic');
+        return;
+    }
+    
+    if (numQuestions < 1 || numQuestions > 20) {
+        showError('Number of questions must be between 1 and 20');
+        return;
+    }
+    
+    // Show loading spinner
+    document.getElementById('loadingSpinner').style.display = 'block';
+    document.getElementById('quizResults').style.display = 'none';
+    document.getElementById('errorMessage').style.display = 'none';
+    document.getElementById('generateBtn').disabled = true;
+    
+    try {
+        const response = await fetch('/api/generate-quiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                topic: topic,
+                num_questions: numQuestions,
+                difficulty: difficulty
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            displayQuizPreview(result);
+            showSuccess(`Quiz generated! ${result.message}`);
+        } else {
+            showError(result.message || 'Failed to generate quiz');
+        }
+    } catch (error) {
+        showError('Error: ' + error.message);
+    } finally {
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('generateBtn').disabled = false;
+    }
+});
+
+function displayQuizPreview(result) {
+    const quizData = result.data;
+    const quizId = result.quiz_id;
+    
+    let previewHTML = `
+        <div class="quiz-preview">
+            <h4>${quizData.topic}</h4>
+            <p>
+                <strong>Questions:</strong> ${quizData.num_questions} | 
+                <strong>Difficulty:</strong> <span class="difficulty-badge difficulty-${quizData.difficulty}">${quizData.difficulty}</span>
+            </p>
+            <hr>
+    `;
+    
+    // Show first 3 questions as preview
+    quizData.questions.slice(0, 3).forEach((q, idx) => {
+        previewHTML += `
+            <div class="question-preview">
+                <h5>Q${idx + 1}. ${q.question}</h5>
+                ${q.options.map(opt => `<div class="option-preview">• ${opt}</div>`).join('')}
+            </div>
+        `;
+    });
+    
+    if (quizData.questions.length > 3) {
+        previewHTML += `<p class="text-muted text-center">+ ${quizData.questions.length - 3} more questions...</p>`;
+    }
+    
+    previewHTML += '</div>';
+    
+    document.getElementById('quizPreviewContainer').innerHTML = previewHTML;
+    document.getElementById('takeQuizBtn').href = `/ai-quiz/${quizId}`;
+    document.getElementById('quizResults').style.display = 'block';
+}
+
+function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.textContent = '❌ ' + message;
+    errorDiv.style.display = 'block';
+}
+
+function showSuccess(message) {
+    const successDiv = document.getElementById('successMessage');
+    successDiv.textContent = '✅ ' + message;
+    successDiv.style.display = 'block';
+    setTimeout(() => {
+        successDiv.style.display = 'none';
+    }, 3000);
+}
+</script>
+{% endblock %}
