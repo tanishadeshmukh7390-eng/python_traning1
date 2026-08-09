@@ -1924,6 +1924,22 @@ def Result():
 
     return flask.render_template("result.html", score=score, total=total)
 
+@app.route('/student-dashboard')
+def student_dashboard():
+
+    # Example data
+    total_quizzes = 10
+    completed_quizzes = 8
+    average_score = 76
+    best_score = 95
+
+    return render_template(
+        'student_dashboard.html',
+        total_quizzes=total_quizzes,
+        completed_quizzes=completed_quizzes,
+        average_score=average_score,
+        best_score=best_score
+    )
 @app.route("/pdf_summary")
 def pdf_summary():
     return render_template("pdf_summary.html")

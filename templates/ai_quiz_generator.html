@@ -36,13 +36,46 @@
     .form-group {
         margin-bottom: 1.5rem;
     }
-    
     .form-label {
-        font-weight: 600;
-        color: #8a0505;
-        margin-bottom: 0.5rem;
-        display: block;
+    color: #4f7cff;
+}
+.form-label {
+    color: #4f7cff;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 2px solid #667eea;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+.ai-header {
+    animation: aiGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes aiGlow {
+    from {
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
     }
+    to {
+        box-shadow: 0 8px 40px rgba(118, 75, 162, 0.55);
+    }
+}
+.btn-generate {
+    padding: 0.85rem 2.5rem;
+    font-size: 1.05rem;
+}
+.info-box {
+    background: rgba(33, 150, 243, 0.10);
+    border-left: 4px solid #2196F3;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+}
+
+
+    
     
     .form-control {
         border-radius: 8px;
@@ -98,6 +131,19 @@
         margin-top: 2rem;
         display: none;
     }
+    .question-preview {
+    margin-bottom: 1rem;
+    padding: 1.2rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.question-preview:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
     
     .quiz-preview {
         background: white;

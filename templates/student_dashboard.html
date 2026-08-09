@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - Study Master Pro{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="dashboard-header text-center mb-5">
+
+    <div style="font-size: 55px;">🎓</div>
+
+    <h1 class="fw-bold text-gradient">
+        Student Dashboard
+    </h1>
+
+    <p class="text-secondary-light">
+        Track your learning, quiz performance and progress.
+    </p>
+
+</div>
+
+
+<!-- Statistics Cards -->
+<div class="row g-4 mb-5">
+
+    <div class="col-lg-3 col-md-6">
+        <div class="dashboard-card text-center">
+            <div class="dashboard-icon">📝</div>
+
+            <h2 class="fw-bold">
+                {{ total_quizzes }}
+            </h2>
+
+            <p>Total Quizzes</p>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-md-6">
+        <div class="dashboard-card text-center">
+            <div class="dashboard-icon">✅</div>
+
+            <h2 class="fw-bold">
+                {{ completed_quizzes }}
+            </h2>
+
+            <p>Completed</p>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-md-6">
+        <div class="dashboard-card text-center">
+            <div class="dashboard-icon">📊</div>
+
+            <h2 class="fw-bold">
+                {{ average_score }}%
+            </h2>
+
+            <p>Average Score</p>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-md-6">
+        <div class="dashboard-card text-center">
+            <div class="dashboard-icon">🏆</div>
+
+            <h2 class="fw-bold">
+                {{ best_score }}%
+            </h2>
+
+            <p>Best Score</p>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Learning Progress -->
+<div class="card-premium mb-4">
+
+    <div class="card-body p-4">
+
+        <h3 class="fw-bold mb-3">
+            📈 Learning Progress
+        </h3>
+
+        <div class="progress" style="height: 20px;">
+
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: {{ average_score }}%;">
+                {{ average_score }}%
+            </div>
+
+        </div>
+
+        <p class="text-secondary-light mt-3 mb-0">
+            Keep practicing to improve your performance! 🚀
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- Quick Actions -->
+<div class="card-premium mb-4">
+
+    <div class="card-body p-4">
+
+        <h3 class="fw-bold mb-4">
+            🚀 Quick Actions
+        </h3>
+
+        <div class="row g-3">
+
+            <!-- AI Quiz -->
+            <div class="col-md-4">
+
+                <a href="{{ url_for('ai_quiz_generator') }}"
+                   class="btn btn-primary w-100">
+
+                    🤖 AI Quiz
+
+                </a>
+
+            </div>
+
+
+            <!-- Practice Quiz -->
+            <div class="col-md-4">
+
+                <a href="{{ url_for('ai_quiz_generator') }}"
+                   class="btn btn-success w-100">
+
+                    📊 Practice Quiz
+
+                </a>
+
+            </div>
+
+
+            <!-- About -->
+            <div class="col-md-4">
+
+                <a href="{{ url_for('about') }}"
+                   class="btn btn-info w-100">
+
+                    ℹ️ About
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Achievement -->
+<div class="card-premium mb-4">
+
+    <div class="card-body p-4">
+
+        <h3 class="fw-bold mb-4">
+            🏆 Your Achievement
+        </h3>
+
+        <div class="row g-3 text-center">
+
+            <!-- First Quiz -->
+            <div class="col-md-4">
+
+                <div class="p-4 rounded"
+                     style="background: rgba(255,255,255,0.05);">
+
+                    <div style="font-size: 45px;">
+                        🥇
+                    </div>
+
+                    <h5 class="mt-2 fw-bold">
+                        First Quiz
+                    </h5>
+
+                    <p class="text-secondary-light mb-0">
+                        Quiz completed
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Quiz Streak -->
+            <div class="col-md-4">
+
+                <div class="p-4 rounded"
+                     style="background: rgba(255,255,255,0.05);">
+
+                    <div style="font-size: 45px;">
+                        🔥
+                    </div>
+
+                    <h5 class="mt-2 fw-bold">
+                        Quiz Streak
+                    </h5>
+
+                    <p class="text-secondary-light mb-0">
+                        Keep practicing!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Goal -->
+            <div class="col-md-4">
+
+                <div class="p-4 rounded"
+                     style="background: rgba(255,255,255,0.05);">
+
+                    <div style="font-size: 45px;">
+                        🎯
+                    </div>
+
+                    <h5 class="mt-2 fw-bold">
+                        Goal
+                    </h5>
+
+                    <p class="text-secondary-light mb-0">
+                        Improve your score
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Daily Learning Goal -->
+<div class="card-premium mb-4">
+
+    <div class="card-body p-4">
+
+        <h3 class="fw-bold mb-3">
+            🎯 Today's Learning Goal
+        </h3>
+
+        <p class="text-secondary-light">
+            Complete 2 quizzes today and keep improving your skills! 🚀
+        </p>
+
+        <div class="progress" style="height: 20px;">
+
+            <div class="progress-bar"
+                 role="progressbar"
+                 style="width: 50%;">
+
+                1 / 2 Completed
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Learning Tip -->
+<div class="card-premium mb-4">
+
+    <div class="card-body p-4">
+
+        <h3 class="fw-bold mb-3">
+            💡 Learning Tip
+        </h3>
+
+        <p class="text-secondary-light mb-0">
+            📚 Practice regularly, review your mistakes,
+            and take quizzes to strengthen your concepts.
+            Keep learning and keep improving! 🚀
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- Footer Message -->
+<div class="text-center mt-5 mb-4">
+
+    <h4 class="fw-bold text-gradient">
+        📚 Keep Learning • 💻 Keep Coding • 🚀 Keep Growing
+    </h4>
+
+    <p class="text-secondary-light">
+        🎓 Study Master Pro — Your Learning. Your Progress. Your Success.
+    </p>
+
+</div>
+
+
+{% endblock %}

@@ -32,6 +32,9 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="navbar-nav ms-auto w-100 justify-content-end">
                 <a class="nav-link" href="{{ url_for('Home') }}">🏠 Home</a>
+                <a href="{{ url_for('student_dashboard') }}"
+   class="nav-link">
+    🎓 Dashboard
                 <a class="nav-link" href="{{ url_for('about') }}">ℹ️ About</a>
                 <a class="nav-link" href="{{ url_for('ai_quiz_generator') }}">🤖 AI Quiz</a>
                 <a class="nav-link" href="{{ url_for('students') }}">🧑‍🎓 Students</a>
@@ -41,7 +44,8 @@
                     <a class="nav-link" href="{{ url_for('add_student') }}">➕ Add Student</a>
                     <a class="nav-link" href="{{ url_for('Add_Question') }}">📝 Add Question</a>
                 {% endif %}
-
+                
+</a>
                 <a class="nav-link" href="{{ url_for('filter') }}">🔍 Filter</a>
                 <li class="nav-item">
     

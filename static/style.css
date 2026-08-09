@@ -764,3 +764,49 @@ li:hover{
     color:white;
     transform:translateX(8px);
 }
+.about-card-img {
+    width: 100% !important;
+    max-width: 600px !important;
+    height: 330px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto 25px auto !important;
+}
+.about-card-img:hover {
+    transform: translateY(-8px) scale(1.08);
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.35);
+}
+.mission-image {
+    width: 100%;
+    max-width: 500px;
+    height: 280px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+.dashboard-card {
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-6px);
+}
+
+.dashboard-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.dashboard-card h2 {
+    font-size: 2rem;
+    color: #667eea;
+}
+
+.dashboard-card p {
+    margin: 0;
+    font-weight: 600;
+}
