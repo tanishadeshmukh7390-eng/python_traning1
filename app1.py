@@ -513,7 +513,6 @@ QUESTIONS_DS = [
         "answer": "Queue"
     }
 ]
-
 stud = [
     {
         'Sr_no':1,
@@ -533,10 +532,7 @@ stud = [
 
 @app.route('/')
 def Home():
-    return flask.render_template('home.html',students=stud)
-    
-    
-    
+    return render_template('home.html', students=stud)
 
 
 
