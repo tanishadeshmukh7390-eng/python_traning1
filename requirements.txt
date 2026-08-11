@@ -11,3 +11,4 @@ python-dotenv==1.0.0
 PyPDF2
 groq
 pdfplumber
+gunicorn
