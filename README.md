@@ -37,10 +37,10 @@ Build smarter. Learn faster. Track your progress.
 ## ▶️ Run Locally
 
 ```bash
-git clone https://github.com/your-username/StudyMasterPro.git
+git clone https://github.com/tanishadeshmukh7390-eng/python_traning1
 cd StudyMasterPro
 pip install -r requirements.txt
-python app.py
+python app1.py
 ```
 
 ## 👩‍💻 Developer
